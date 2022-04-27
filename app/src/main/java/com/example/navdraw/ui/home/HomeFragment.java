@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,6 +17,8 @@ import com.example.navdraw.MainActivity;
 import com.example.navdraw.R;
 import com.example.navdraw.TaxSample;
 import com.example.navdraw.databinding.FragmentHomeBinding;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,6 +32,10 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
+    private int totalTaxAmount;
+    private int averageTaxAmount;
+    EditText editTextTotalTax;
+    EditText editTextAverageTax;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,12 +45,19 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        editTextTotalTax = (EditText) root.findViewById(R.id.editTextTotalTax);
+        editTextAverageTax = (EditText) root.findViewById(R.id.editTextTextAverageTax);
         final TextView textView = binding.textHome;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
+        readTaxData();
+        //TODO fix this shit
+        //calculator();
         return root;
 
     } private List<TaxSample> TaxSamples = new ArrayList<>();
+
+
 
     public void writeFile(View v){
         Context context = null;
@@ -97,8 +111,18 @@ public class HomeFragment extends Fragment {
             e.printStackTrace();
         }
     }
-    //Writes saved firms data to csv
-    //Add favorites button to this
+    //Counts total taxes paid and average amount of taxes paid
+    /*public void calculator(){
+        int count = 0;
+        for (int i = 0; i < TaxSamples.size(); i++) {
+            int helper = Integer.parseInt(TaxSamples.get(i).getPayedTax());
+            totalTaxAmount += helper;
+            count ++;
+        }
+        averageTaxAmount = totalTaxAmount / count;
+        editTextTotal.setText(totalTaxAmount);
+        editTextAverage.setText(averageTaxAmount);
+    }*/
 
 
     @Override
