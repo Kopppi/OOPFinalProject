@@ -32,10 +32,12 @@ import java.util.List;
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private int totalTaxAmount;
-    private int averageTaxAmount;
-    EditText editTextTotalTax;
-    EditText editTextAverageTax;
+    private double totalTaxAmount = 0;
+    private double averageTaxAmount = 0;
+    TextView textViewTotalTax;
+    TextView textViewAverageTax;
+    String help;
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -45,14 +47,11 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        editTextTotalTax = (EditText) root.findViewById(R.id.editTextTotalTax);
-        editTextAverageTax = (EditText) root.findViewById(R.id.editTextTextAverageTax);
-        final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
+        textViewTotalTax = (TextView) root.findViewById(R.id.textViewTotalTax);
+        textViewAverageTax = (TextView) root.findViewById(R.id.textViewaverageTax);
         readTaxData();
         //TODO fix this shit
-        //calculator();
+        calculator();
         return root;
 
     } private List<TaxSample> TaxSamples = new ArrayList<>();
@@ -92,7 +91,8 @@ public class HomeFragment extends Fragment {
         String line = "";
         try {
             while ((line = reader.readLine()) != null){
-                // Split by ','
+                // Split by ';'
+                line = line.replaceAll(",", ".");
                 String[] tokens = line.split(";");
 
                 // Read the data
@@ -100,8 +100,8 @@ public class HomeFragment extends Fragment {
                 sample.setID(tokens[1]);
                 sample.setName(tokens[2]);
                 sample.setLocation(tokens[3]);
-                sample.setTaxedIncome(String.valueOf((tokens[4])));
-                sample.setPayedTax(String.valueOf((tokens[5])));
+                sample.setTaxedIncome(Double.parseDouble(tokens[4]));
+                sample.setPayedTax(Double.parseDouble(tokens[5]));
                 TaxSamples.add(sample);
 
                 Log.d("MyActivity", "Just created "+ sample);
@@ -112,17 +112,19 @@ public class HomeFragment extends Fragment {
         }
     }
     //Counts total taxes paid and average amount of taxes paid
-    /*public void calculator(){
-        int count = 0;
+    public void calculator(){
+        double count = 0;
         for (int i = 0; i < TaxSamples.size(); i++) {
-            int helper = Integer.parseInt(TaxSamples.get(i).getPayedTax());
-            totalTaxAmount += helper;
+            totalTaxAmount += TaxSamples.get(i).getPayedTax();
             count ++;
         }
-        averageTaxAmount = totalTaxAmount / count;
-        editTextTotal.setText(totalTaxAmount);
-        editTextAverage.setText(averageTaxAmount);
-    }*/
+        averageTaxAmount = (totalTaxAmount / count);
+        String totalDouble = String.format("%.1f" + " €", totalTaxAmount);
+        String averageDouble = String.format("%.1f" + " €", averageTaxAmount);
+        textViewTotalTax.setText(totalDouble);
+        textViewAverageTax.setText(averageDouble);
+
+    }
 
 
     @Override
