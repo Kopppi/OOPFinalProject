@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+
+import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
@@ -13,7 +15,8 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-
+import android.net.Uri;
+import android.app.DownloadManager;
 import android.content.Context;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
@@ -34,23 +37,29 @@ public class MainActivity extends AppCompatActivity {
     Context context = null;
 
 
+    DownloadManager dlmanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // Checking if the file is present on the system
+        // If it isn't, fetch from the internet
+        File taxData = new File(".raw/verotiedot.csv");
+        if (!taxData.exists())   {
+            dlmanager = (DownloadManager) getSystemService(context.DOWNLOAD_SERVICE);
+            Uri uri = Uri.parse("https://www.vero.fi/contentassets/a7b04897ccd44feda446bd1894c1fd74/verohallinto_yhteisojen-tuloverotuksen-julkiset-tiedot-2020.csv");
+            DownloadManager.Request request = new DownloadManager.Request(uri);
+            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
+            long reference = dlmanager.enqueue(request);
+
+        }
+
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Favourite button?", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -63,90 +72,14 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        //DO NOT TOUCH THESE, WILL BREAK THE WHOLE APP, FIX!!!!!!
-        //context = MainActivity.this;
-        //System.out.println(context.getFilesDir());
-        //setContentView(R.layout.activity_main);
-        //DO NOT TOUCH THESE, WILL BREAK THE WHOLE APP, FIX!!!!!!
-
-
-
-        //Writing headline for saved firms file
-        /*try {
-            OutputStreamWriter ows = new OutputStreamWriter(context.openFileOutput("savedFirms.csv", context.MODE_APPEND));
-            ows.append("Y-tunnus;verovelvollisen nimi;verotuskunta;verotettava tulo;maksuunpannut verot yhteensä\n");
-            ows.close();
-            System.out.println("Headline writen");
-
-        } catch (IOException e){
-            Log.e("IOException", "Error in WriteFile");
-        }*/
-        //TODO testataan toimiiko ilman
-        //readTaxData();
-
-
     }
 
-
-    /* TODO testataan toimiiko ilman
-    private List<TaxSample> TaxSamples = new ArrayList<>();
-
-
-    public void writeFile(View v){
-        try {
-            OutputStreamWriter ows = new OutputStreamWriter(context.openFileOutput("savedFirms2.csv", context.MODE_APPEND));
-            ows.append(TaxSamples.get(1).getID() + ";" + TaxSamples.get(1).getName() + ";" + TaxSamples.get(1).getLocation() + ";" + TaxSamples.get(1).getTaxedIncome() + ";" + TaxSamples.get(1).getPayedTax() + "\n");
-            ows.close();
-            System.out.println("Written line to csv");
-
-        } catch (IOException e){
-            Log.e("IOException", "Error in WriteFile");
-        }
-    }
-
-    private void readTaxData() {
-
-        InputStream is = getResources().openRawResource(R.raw.verotiedot);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-
-        // Get rid of title line
-        try {
-            String extra = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String line = "";
-        try {
-            while ((line = reader.readLine()) != null){
-                // Split by ','
-                String[] tokens = line.split(";");
-
-                // Read the data
-                TaxSample sample = new TaxSample();
-                sample.setID(tokens[1]);
-                sample.setName(tokens[2]);
-                sample.setLocation(tokens[3]);
-                sample.setTaxedIncome(String.valueOf((tokens[4])));
-                sample.setPayedTax(String.valueOf((tokens[5])));
-                TaxSamples.add(sample);
-
-                Log.d("MyActivity", "Just created "+ sample);
-            }
-        } catch (IOException e) {
-            Log.wtf("MyActivity", "Error reading data on line " + line, e);
-            e.printStackTrace();
-        }
-    }
-    //Writes saved firms data to csv
-    //Add favorites button to this
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-    */
 
     @Override
     public boolean onSupportNavigateUp() {
