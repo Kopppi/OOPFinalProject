@@ -4,16 +4,16 @@ public class TaxSample {
     private String ID;
     private String name;
     private String location;
-    private String TaxedIncome;
-    private String PayedTax;
+    private double TaxedIncome;
+    private double PayedTax;
 
     @Override
     public String toString() {
         return "TaxSample{" +
                 "ID='" + ID + '\'' +
-        ", name='" + name + '\'' +
-        ", location='" + location + '\'' +
-        ", TaxedIncome=" + TaxedIncome +
+                ", name='" + name + '\'' +
+                ", location='" + location + '\'' +
+                ", TaxedIncome=" + TaxedIncome +
                 ", PayedTax=" + PayedTax +
                 '}';
     }
@@ -42,19 +42,19 @@ public class TaxSample {
         this.location = location;
     }
 
-    public String getTaxedIncome() {
+    public double getTaxedIncome() {
         return TaxedIncome;
     }
 
-    public void setTaxedIncome(String taxedIncome) {
+    public void setTaxedIncome(double taxedIncome) {
         TaxedIncome = taxedIncome;
     }
 
-    public String getPayedTax() {
+    public double getPayedTax() {
         return PayedTax;
     }
 
-    public void setPayedTax(String payedTax) {
+    public void setPayedTax(double payedTax) {
         PayedTax = payedTax;
     }
 }
