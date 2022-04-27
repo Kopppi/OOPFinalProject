@@ -2,15 +2,21 @@ package com.example.navdraw.ui.home;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navdraw.MainActivity;
@@ -36,7 +42,11 @@ public class HomeFragment extends Fragment {
     private double averageTaxAmount = 0;
     TextView textViewTotalTax;
     TextView textViewAverageTax;
-    String help;
+
+    EditText editTextFilter;
+    ListView listView;
+    ArrayAdapter adapter;
+    ArrayList<String> names = new ArrayList<>();
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -49,32 +59,49 @@ public class HomeFragment extends Fragment {
 
         textViewTotalTax = (TextView) root.findViewById(R.id.textViewTotalTax);
         textViewAverageTax = (TextView) root.findViewById(R.id.textViewaverageTax);
+        editTextFilter = (EditText) root.findViewById(R.id.editTextSearch);
+        listView = (ListView) root.findViewById(R.id.listViewID);
+
+
+        //Adding adapter to arraylist names
+        adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
+                R.layout.list_item_layout , names);
+        listView.setAdapter(adapter);
+
+        //Adding filter to enable search from listview
+        editTextFilter.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                (HomeFragment.this).adapter.getFilter().filter(charSequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                FragmentManager fm = getActivity().getFragmentManager();
+                fm.beginTransaction().replace(R.id.frag)
+                FragmentManager fm = getActivity().getFragmentManager();
+                fm.beginTransaction().replace(R.id.content_main, new ()).commit();
+            }
+        });*/
+
+
         readTaxData();
-        //TODO fix this shit
         calculator();
         return root;
 
     } private List<TaxSample> TaxSamples = new ArrayList<>();
 
-
-
-    public void writeFile(View v){
-        Context context = null;
-        // Can't pass this.Activity since we're not in an inner class of MainActivity
-        // We need an instance of a context from the Activity
-        // Multiple activities so getActivity is necessary instead of this.MainActivity
-        context = getActivity();
-        System.out.println(context.getFilesDir());
-        try {
-            OutputStreamWriter ows = new OutputStreamWriter(context.openFileOutput("savedFirms2.csv", context.MODE_APPEND));
-            ows.append(TaxSamples.get(1).getID() + ";" + TaxSamples.get(1).getName() + ";" + TaxSamples.get(1).getLocation() + ";" + TaxSamples.get(1).getTaxedIncome() + ";" + TaxSamples.get(1).getPayedTax() + "\n");
-            ows.close();
-            System.out.println("Written line to csv");
-
-        } catch (IOException e){
-            Log.e("IOException", "Error in WriteFile");
-        }
-    }
 
     private void readTaxData() {
 
@@ -102,6 +129,7 @@ public class HomeFragment extends Fragment {
                 sample.setLocation(tokens[3]);
                 sample.setTaxedIncome(Double.parseDouble(tokens[4]));
                 sample.setPayedTax(Double.parseDouble(tokens[5]));
+                names.add(tokens[2]);
                 TaxSamples.add(sample);
 
                 Log.d("MyActivity", "Just created "+ sample);
@@ -123,7 +151,6 @@ public class HomeFragment extends Fragment {
         String averageDouble = String.format("%.1f" + " €", averageTaxAmount);
         textViewTotalTax.setText(totalDouble);
         textViewAverageTax.setText(averageDouble);
-
     }
 
 
