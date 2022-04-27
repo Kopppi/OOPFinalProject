@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
     Context context = null;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,13 +81,16 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException e){
             Log.e("IOException", "Error in WriteFile");
         }*/
-        readTaxData();
+        //TODO testataan toimiiko ilman
+        //readTaxData();
 
 
     }
 
 
+    /* TODO testataan toimiiko ilman
     private List<TaxSample> TaxSamples = new ArrayList<>();
+
 
     public void writeFile(View v){
         try {
@@ -142,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+    */
 
     @Override
     public boolean onSupportNavigateUp() {
