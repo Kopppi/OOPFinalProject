@@ -51,6 +51,7 @@ public class HomeFragment extends Fragment {
     private List<TaxSample> TaxSamples;
 
 
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         HomeViewModel homeViewModel =
@@ -97,10 +98,8 @@ public class HomeFragment extends Fragment {
                 //String selected = ((TextView) root.findViewById(R.id.listViewID)).getText().toString();
                 //Toast.makeText(context,selected,Toast.LENGTH_LONG).show();
                 System.out.println("Position: " + i);
-                Toast.makeText(getContext(), ((TextView) view).getText(),
-                        Toast.LENGTH_SHORT).show();
                 Fragment fragment = null;
-                Bundle bdl=new Bundle();
+                Bundle bdl = new Bundle();
                 bdl.putInt("a",i);
                 try {
                     fragment = (Fragment) CompanyFragment.class.newInstance();

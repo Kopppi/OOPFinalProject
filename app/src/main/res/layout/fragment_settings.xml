@@ -19,4 +19,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:gravity="center"
+        android:textStyle="bold"
+        android:id="@+id/switchCompat"
+        android:text="Dark Mode"
+        android:textSize="20dp"
+        android:padding="10dp"
+        app:switchPadding="10dp"
+        android:checked="false"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
