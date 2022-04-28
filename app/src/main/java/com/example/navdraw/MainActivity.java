@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-
+import android.os.StrictMode;
 import java.io.File;
 import java.io.OutputStreamWriter;
 import java.io.IOException;
@@ -42,6 +42,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         TaxList taxList = TaxList.getInstance();
         taxList.setArrays(getApplicationContext());
 
