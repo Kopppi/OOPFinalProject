@@ -45,7 +45,7 @@ public class HomeFragment extends Fragment {
     private double averageTaxAmount = 0;
     TextView textViewTotalTax;
     TextView textViewAverageTax;
-    TextView textViewMainos;
+    TextView textViewAd;
     private String selected;
     EditText editTextFilter;
     ListView listView;
@@ -71,7 +71,7 @@ public class HomeFragment extends Fragment {
         textViewAverageTax = (TextView) root.findViewById(R.id.textViewaverageTax);
         editTextFilter = (EditText) root.findViewById(R.id.editTextSearch);
         listView = (ListView) root.findViewById(R.id.listViewID);
-        textViewMainos = (TextView)root.findViewById(R.id.Mainos);
+        textViewAd = (TextView)root.findViewById(R.id.ad);
         names = TaxList.getInstance().getNames();
 
 
@@ -102,7 +102,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //get the selected company name to string and send it to another fragment
-                String selectedFromList =(listView.getItemAtPosition(i).toString());
+                String selectedFromList = (listView.getItemAtPosition(i).toString());
                 Fragment fragment = null;
                 Bundle bdl=new Bundle();
                 bdl.putString("a",selectedFromList);
@@ -130,8 +130,7 @@ public class HomeFragment extends Fragment {
         films.readXML();
         Random rand = new Random();
         int randNum = rand.nextInt(5);
-        textViewMainos.setText("Advertisement: Finnkino currently playing movies: " + films.getArray().get(randNum).getTitle());
-        System.out.println("Teatteri ID: " + theaters.getArray().get(1).getID());
+        textViewAd.setText("Advertisement: Finnkino currently playing movies: " + films.getArray().get(randNum).getTitle());
         return root;
     }
 
