@@ -7,23 +7,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
+
 import com.example.navdraw.R;
 
 import com.example.navdraw.TaxList;
 import com.example.navdraw.TaxSample;
-import com.example.navdraw.databinding.FragmentFavouritesBinding;
 import com.example.navdraw.ui.home.HomeFragment;
-import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.util.List;
 
 public class CompanyFragment extends Fragment {
 
-    int a;
+    String a;
+    int b = 0;
+    int position;
     TextView textViewName;
     TextView textViewTaxed;
     TextView textViewYID;
@@ -35,6 +34,7 @@ public class CompanyFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_company, container, false);
+        TaxSamples = TaxList.getInstance().getTaxSamples();
 
         textViewName = rootView.findViewById(R.id.textViewName);
         textViewTaxed = rootView.findViewById(R.id.textViewTaxed);
@@ -42,9 +42,12 @@ public class CompanyFragment extends Fragment {
         textViewTax = rootView.findViewById(R.id.textViewTax);
         buttonBack = rootView.findViewById(R.id.buttonBack);
 
-        //Gets index from listview on item that has been clicked
-        a = getArguments().getInt("a");
+        //Gets string from listview on item that has been clicked
+        a = getArguments().getString("a");
+        //Get position of company in the list
+        position = getPosition();
         setData();
+        //Creating a button and onClickListener to go back to home fragment
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,16 +66,28 @@ public class CompanyFragment extends Fragment {
                 transaction.commit();
             }
         });
-
         return rootView;
+    }
+
+    //Check what position in the list the selected company is
+    public int getPosition() {
+        for (int i = 0; i < TaxSamples.size(); i++) {
+            if (TaxSamples.get(i).getName() == a) {
+                return i;
+            }
+        }
+        return b;
     }
 
     //Set data to textviews
     public void setData() {
-        TaxSamples = TaxList.getInstance().getTaxSamples();
-        textViewName.setText(TaxSamples.get(a).getName());
-        textViewYID.setText(TaxSamples.get(a).getID());
-        textViewTax.setText(String.valueOf(TaxSamples.get(a).getTaxedIncome()));
-        textViewTaxed.setText(String.valueOf(TaxSamples.get(a).getPayedTax()));
+        textViewName.setText(TaxSamples.get(position).getName());
+        textViewYID.setText(TaxSamples.get(position).getID());
+        textViewTax.setText(String.valueOf(TaxSamples.get(position).getTaxedIncome()) + " €");
+        textViewTaxed.setText(String.valueOf(TaxSamples.get(position).getPayedTax()) + " €");
+    }
+
+    public void addToFavourites(){
+
     }
 }

@@ -93,15 +93,11 @@ public class HomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                //String selected = (root.findViewById(R.id))
-                //String selected = ((TextView) root.findViewById(R.id.listViewID)).getText().toString();
-                //Toast.makeText(context,selected,Toast.LENGTH_LONG).show();
-                System.out.println("Position: " + i);
-                Toast.makeText(getContext(), ((TextView) view).getText(),
-                        Toast.LENGTH_SHORT).show();
+                //get the selected company name to string and send it to another fragment
+                String selectedFromList =(listView.getItemAtPosition(i).toString());
                 Fragment fragment = null;
                 Bundle bdl=new Bundle();
-                bdl.putInt("a",i);
+                bdl.putString("a",selectedFromList);
                 try {
                     fragment = (Fragment) CompanyFragment.class.newInstance();
                 } catch (IllegalAccessException e) {
