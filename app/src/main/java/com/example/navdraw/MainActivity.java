@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         // Checking if the file is present on the system
         // If it isn't, fetch from the internet
+        //TODO tää ei tee mitää poista?
         File taxData = new File(".raw/verotiedot.csv");
         if (!taxData.exists())   {
             dlmanager = (DownloadManager) getSystemService(context.DOWNLOAD_SERVICE);
