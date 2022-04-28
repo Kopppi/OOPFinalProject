@@ -10,21 +10,14 @@
         android:name="com.example.navdraw.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_Search"
-        android:name="com.example.navdraw.ui.search.SearchFragment"
-        android:label="@string/menu_search"
-        tools:layout="@layout/fragment_search" />
-
-    <fragment
-        android:id="@+id/nav_Settings"
-        android:name="com.example.navdraw.ui.settings.SettingsFragment"
-        android:label="@string/menu_settings"
-        tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/nav_Favourites"
         android:name="com.example.navdraw.ui.favourites.FavouritesFragment"
         android:label="@string/menu_favourites"
         tools:layout="@layout/fragment_favourites" />
+    <fragment
+        android:id="@+id/nav_Settings"
+        android:name="com.example.navdraw.ui.settings.SettingsFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

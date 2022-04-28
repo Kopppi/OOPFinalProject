@@ -1,6 +1,6 @@
 package com.example.navdraw.ui.home;
 
-import android.content.Context;
+
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -17,20 +17,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.navdraw.MainActivity;
 import com.example.navdraw.R;
 import com.example.navdraw.TaxSample;
 import com.example.navdraw.databinding.FragmentHomeBinding;
-
-import org.w3c.dom.Text;
+import com.example.navdraw.ui.company.CompanyFragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,15 +83,29 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        /*listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        //TODO fragment_home ei näy id:llä. Saa se jotenkin näkyviin ASAP R.layout:lla tulee näkyviin https://stackoverflow.com/questions/27037662/incompatible-types-homefragment-cannot-be-converted-to-fragment-in-android
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                FragmentManager fm = getActivity().getFragmentManager();
-                fm.beginTransaction().replace(R.id.frag)
-                FragmentManager fm = getActivity().getFragmentManager();
-                fm.beginTransaction().replace(R.id.content_main, new ()).commit();
+                /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_content_main, new CompanyFragment()).commit();*/
+                Fragment fragment = null;
+                try {
+                    fragment = (Fragment) CompanyFragment.class.newInstance();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (java.lang.InstantiationException e) {
+                    e.printStackTrace();
+                }
+                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
+                // Replace whatever is in the fragment_container view with this fragment
+                transaction.replace(((ViewGroup)getView().getParent()).getId(), fragment, null);
+                // Commit the transaction
+                transaction.commit();
+
+
             }
-        });*/
+        });
 
 
         readTaxData();
