@@ -1,5 +1,6 @@
 package com.example.navdraw;
 
+import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 
@@ -13,22 +14,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaxList {
-    private static TaxList taxList = new TaxList();
+    private static TaxList taxList = null;
 
-        public static TaxList getInstance() {
+    public static TaxList getInstance() {
+        if (taxList == null) {
+            taxList = new TaxList();
+        }
             return taxList;
         }
 
     private List<TaxSample> TaxSamples;
     private ArrayList<String> names;
 
-
-    private TaxList() {
+    public void setArrays(Context context) {
         TaxSamples = new ArrayList<>();
         names = new ArrayList<>();
 
         String file = "raw/verotiedot10.csv";
-        InputStream is = this.getClass().getClassLoader().getResourceAsStream(file);
+        InputStream is = context.getClassLoader().getResourceAsStream(file);
+        //InputStream is = this.getClass().getClassLoader().getResourceAsStream(file);
         //InputStream is2 = context.openRawResource(R.raw.verotiedot10);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 
@@ -62,6 +66,10 @@ public class TaxList {
             Log.wtf("MyActivity", "Error reading data on line " + line, e);
             e.printStackTrace();
         }
+
+    }
+
+    private TaxList() {
     }
 
     public List<TaxSample> getTaxSamples() {

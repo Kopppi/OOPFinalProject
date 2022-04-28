@@ -58,7 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
         }
         //Context to taxlist from here
-        //
+        TaxList taxList = TaxList.getInstance();
+        taxList.setArrays(getApplicationContext());
+
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
