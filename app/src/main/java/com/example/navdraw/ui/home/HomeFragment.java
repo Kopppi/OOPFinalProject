@@ -95,11 +95,12 @@ public class HomeFragment extends Fragment {
                 //String selected = (root.findViewById(R.id))
                 //String selected = ((TextView) root.findViewById(R.id.listViewID)).getText().toString();
                 //Toast.makeText(context,selected,Toast.LENGTH_LONG).show();
-                selected = getContext().toString();
-                System.out.println("Company string: " + selected);
+                System.out.println("Position: " + i);
                 Toast.makeText(getContext(), ((TextView) view).getText(),
                         Toast.LENGTH_SHORT).show();
                 Fragment fragment = null;
+                Bundle bdl=new Bundle();
+                bdl.putInt("a",i);
                 try {
                     fragment = (Fragment) CompanyFragment.class.newInstance();
                 } catch (IllegalAccessException e) {
@@ -107,6 +108,7 @@ public class HomeFragment extends Fragment {
                 } catch (java.lang.InstantiationException e) {
                     e.printStackTrace();
                 }
+                fragment.setArguments(bdl);
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 // Replace whatever is in the fragment_container view with this fragment
                 transaction.replace(((ViewGroup)getView().getParent()).getId(), fragment, null);
