@@ -21,6 +21,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.navdraw.ui.movie.AllMovies;
+import com.example.navdraw.ui.movie.AllTheaters;
 import com.example.navdraw.R;
 import com.example.navdraw.TaxList;
 import com.example.navdraw.TaxSample;
@@ -34,6 +36,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class HomeFragment extends Fragment {
 
@@ -42,7 +45,7 @@ public class HomeFragment extends Fragment {
     private double averageTaxAmount = 0;
     TextView textViewTotalTax;
     TextView textViewAverageTax;
-
+    TextView textViewMainos;
     private String selected;
     EditText editTextFilter;
     ListView listView;
@@ -50,9 +53,14 @@ public class HomeFragment extends Fragment {
     private ArrayList<String> names;
     private List<TaxSample> TaxSamples;
 
+    int id;
+    AllTheaters theaters = new AllTheaters();
+    AllMovies films = new AllMovies();
+
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
+
         HomeViewModel homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
@@ -63,13 +71,13 @@ public class HomeFragment extends Fragment {
         textViewAverageTax = (TextView) root.findViewById(R.id.textViewaverageTax);
         editTextFilter = (EditText) root.findViewById(R.id.editTextSearch);
         listView = (ListView) root.findViewById(R.id.listViewID);
-
+        textViewMainos = (TextView)root.findViewById(R.id.Mainos);
         names = TaxList.getInstance().getNames();
 
 
         //Adding adapter to ArrayList names
         adapter = new ArrayAdapter<String>(getActivity(),
-               R.layout.list_item_layout, names);
+                R.layout.list_item_layout, names);
         listView.setAdapter(adapter);
 
         //Adding filter to enable search from ListView
@@ -115,6 +123,15 @@ public class HomeFragment extends Fragment {
             }
         });
         calculator();
+
+        // Movie advertisement functions
+
+        theaters.readXML();
+        films.readXML();
+        Random rand = new Random();
+        int randNum = rand.nextInt(5);
+        textViewMainos.setText("Advertisement: Finnkino currently playing movies: " + films.getArray().get(randNum).getTitle());
+        System.out.println("Teatteri ID: " + theaters.getArray().get(1).getID());
         return root;
     }
 
