@@ -37,6 +37,8 @@ public class SettingsFragment extends Fragment {
         final TextView textView = binding.textSettings;
         settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
+
+        //Creating night mode functionality
         imageView = root.findViewById(R.id.imageView);
         switchCompat = root.findViewById(R.id.switchCompat);
 
@@ -45,7 +47,6 @@ public class SettingsFragment extends Fragment {
         if (booleanValue)   {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             switchCompat.setChecked(false);
-            if (switchCompat.isChecked() == true)   { switchCompat.setChecked(true);}
         }
 
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()  {
