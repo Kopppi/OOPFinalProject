@@ -45,23 +45,8 @@ public class MainActivity extends AppCompatActivity {
         TaxList taxList = TaxList.getInstance();
         taxList.setArrays(getApplicationContext());
 
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        // Checking if the file is present on the system
-        // If it isn't, fetch from the internet
-        //TODO tää ei tee mitää poista?
-        File taxData = new File(".raw/verotiedot.csv");
-        if (!taxData.exists())   {
-            dlmanager = (DownloadManager) getSystemService(context.DOWNLOAD_SERVICE);
-            Uri uri = Uri.parse("https://www.vero.fi/contentassets/a7b04897ccd44feda446bd1894c1fd74/verohallinto_yhteisojen-tuloverotuksen-julkiset-tiedot-2020.csv");
-            DownloadManager.Request request = new DownloadManager.Request(uri);
-            request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE);
-            long reference = dlmanager.enqueue(request);
-
-        }
-
-
 
         setSupportActionBar(binding.appBarMain.toolbar);
 

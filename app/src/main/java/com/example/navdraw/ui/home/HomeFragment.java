@@ -67,12 +67,12 @@ public class HomeFragment extends Fragment {
         names = TaxList.getInstance().getNames();
 
 
-        //Adding adapter to arraylist names
+        //Adding adapter to ArrayList names
         adapter = new ArrayAdapter<String>(getActivity(),
                R.layout.list_item_layout, names);
         listView.setAdapter(adapter);
 
-        //Adding filter to enable search from listview
+        //Adding filter to enable search from ListView
         editTextFilter.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -89,6 +89,7 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -115,14 +116,10 @@ public class HomeFragment extends Fragment {
                 // Commit the transaction
                 transaction.commit();
 
-
-
             }
         });
-
         calculator();
         return root;
-
     }
 
     //Counts total taxes paid and average amount of taxes paid

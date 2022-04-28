@@ -115,11 +115,12 @@
                 android:gravity="center"/>
 
             <Button
-                android:text="Back"
+                android:id="@+id/buttonBack"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="Back" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
