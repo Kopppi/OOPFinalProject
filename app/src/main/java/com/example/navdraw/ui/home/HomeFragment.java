@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -42,6 +43,7 @@ public class HomeFragment extends Fragment {
     TextView textViewTotalTax;
     TextView textViewAverageTax;
 
+    private String selected;
     EditText editTextFilter;
     ListView listView;
     ArrayAdapter adapter;
@@ -67,7 +69,7 @@ public class HomeFragment extends Fragment {
 
         //Adding adapter to arraylist names
         adapter = new ArrayAdapter<String>(getActivity(),
-                R.layout.list_item_layout, names);
+               R.layout.list_item_layout, names);
         listView.setAdapter(adapter);
 
         //Adding filter to enable search from listview
@@ -90,6 +92,13 @@ public class HomeFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //String selected = (root.findViewById(R.id))
+                //String selected = ((TextView) root.findViewById(R.id.listViewID)).getText().toString();
+                //Toast.makeText(context,selected,Toast.LENGTH_LONG).show();
+                selected = getContext().toString();
+                System.out.println("Company string: " + selected);
+                Toast.makeText(getContext(), ((TextView) view).getText(),
+                        Toast.LENGTH_SHORT).show();
                 Fragment fragment = null;
                 try {
                     fragment = (Fragment) CompanyFragment.class.newInstance();
@@ -105,53 +114,15 @@ public class HomeFragment extends Fragment {
                 transaction.commit();
 
 
+
             }
         });
 
-
-        //readTaxData();
         calculator();
         return root;
 
-    } //private List<TaxSample> TaxSamples = new ArrayList<>();
+    }
 
-    /* TODO
-    private void readTaxData() {
-
-        InputStream is = getResources().openRawResource(R.raw.verotiedot);
-        BufferedReader reader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-
-        // Get rid of tittle line
-        try {
-            String extra = reader.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        String line = "";
-        try {
-            while ((line = reader.readLine()) != null){
-                // Split by ';'
-                line = line.replaceAll(",", ".");
-                String[] tokens = line.split(";");
-
-                // Read the data
-                TaxSample sample = new TaxSample();
-                sample.setID(tokens[1]);
-                sample.setName(tokens[2]);
-                sample.setLocation(tokens[3]);
-                sample.setTaxedIncome(Double.parseDouble(tokens[4]));
-                sample.setPayedTax(Double.parseDouble(tokens[5]));
-                names.add(tokens[2]);
-                TaxSamples.add(sample);
-
-                Log.d("MyActivity", "Just created "+ sample);
-            }
-        } catch (IOException e) {
-            Log.wtf("MyActivity", "Error reading data on line " + line, e);
-            e.printStackTrace();
-        }
-    }*/
     //Counts total taxes paid and average amount of taxes paid
     public void calculator(){
         TaxSamples = TaxList.getInstance().getTaxSamples();
@@ -166,7 +137,6 @@ public class HomeFragment extends Fragment {
         textViewTotalTax.setText(totalDouble);
         textViewAverageTax.setText(averageDouble);
     }
-
 
     @Override
     public void onDestroyView() {

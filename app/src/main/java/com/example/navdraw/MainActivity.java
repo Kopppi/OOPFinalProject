@@ -42,10 +42,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        TaxList taxList = TaxList.getInstance();
+        taxList.setArrays(getApplicationContext());
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         // Checking if the file is present on the system
         // If it isn't, fetch from the internet
         File taxData = new File(".raw/verotiedot.csv");
@@ -57,9 +59,7 @@ public class MainActivity extends AppCompatActivity {
             long reference = dlmanager.enqueue(request);
 
         }
-        //Context to taxlist from here
-        TaxList taxList = TaxList.getInstance();
-        taxList.setArrays(getApplicationContext());
+
 
 
         setSupportActionBar(binding.appBarMain.toolbar);

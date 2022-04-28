@@ -22,6 +22,7 @@ public class TaxList {
         }
             return taxList;
         }
+//Android studio static context
 
     private List<TaxSample> TaxSamples;
     private ArrayList<String> names;
@@ -30,10 +31,7 @@ public class TaxList {
         TaxSamples = new ArrayList<>();
         names = new ArrayList<>();
 
-        String file = "raw/verotiedot10.csv";
-        InputStream is = context.getClassLoader().getResourceAsStream(file);
-        //InputStream is = this.getClass().getClassLoader().getResourceAsStream(file);
-        //InputStream is2 = context.openRawResource(R.raw.verotiedot10);
+        InputStream is = context.getResources().openRawResource(R.raw.verotiedot10);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 
         // Get rid of tittle line
