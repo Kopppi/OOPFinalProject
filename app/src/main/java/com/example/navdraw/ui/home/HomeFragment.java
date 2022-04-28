@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.navdraw.R;
+import com.example.navdraw.TaxList;
 import com.example.navdraw.TaxSample;
 import com.example.navdraw.databinding.FragmentHomeBinding;
 import com.example.navdraw.ui.company.CompanyFragment;
@@ -44,7 +45,8 @@ public class HomeFragment extends Fragment {
     EditText editTextFilter;
     ListView listView;
     ArrayAdapter adapter;
-    ArrayList<String> names = new ArrayList<>();
+    private ArrayList<String> names;
+    private List<TaxSample> TaxSamples;
 
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -54,16 +56,18 @@ public class HomeFragment extends Fragment {
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
-
+        TaxList taxList = TaxList.getInstance();
         textViewTotalTax = (TextView) root.findViewById(R.id.textViewTotalTax);
         textViewAverageTax = (TextView) root.findViewById(R.id.textViewaverageTax);
         editTextFilter = (EditText) root.findViewById(R.id.editTextSearch);
         listView = (ListView) root.findViewById(R.id.listViewID);
 
+        names = TaxList.getInstance().getNames();
+
 
         //Adding adapter to arraylist names
-        adapter = new ArrayAdapter<String>(getActivity().getApplicationContext(),
-                R.layout.list_item_layout , names);
+        adapter = new ArrayAdapter<String>(getActivity(),
+                R.layout.list_item_layout, names);
         listView.setAdapter(adapter);
 
         //Adding filter to enable search from listview
@@ -83,12 +87,9 @@ public class HomeFragment extends Fragment {
 
             }
         });
-        //TODO fragment_home ei näy id:llä. Saa se jotenkin näkyviin ASAP R.layout:lla tulee näkyviin https://stackoverflow.com/questions/27037662/incompatible-types-homefragment-cannot-be-converted-to-fragment-in-android
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                /*FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.nav_host_fragment_content_main, new CompanyFragment()).commit();*/
                 Fragment fragment = null;
                 try {
                     fragment = (Fragment) CompanyFragment.class.newInstance();
@@ -108,13 +109,13 @@ public class HomeFragment extends Fragment {
         });
 
 
-        readTaxData();
+        //readTaxData();
         calculator();
         return root;
 
-    } private List<TaxSample> TaxSamples = new ArrayList<>();
+    } //private List<TaxSample> TaxSamples = new ArrayList<>();
 
-
+    /* TODO
     private void readTaxData() {
 
         InputStream is = getResources().openRawResource(R.raw.verotiedot);
@@ -150,9 +151,10 @@ public class HomeFragment extends Fragment {
             Log.wtf("MyActivity", "Error reading data on line " + line, e);
             e.printStackTrace();
         }
-    }
+    }*/
     //Counts total taxes paid and average amount of taxes paid
     public void calculator(){
+        TaxSamples = TaxList.getInstance().getTaxSamples();
         double count = 0;
         for (int i = 0; i < TaxSamples.size(); i++) {
             totalTaxAmount += TaxSamples.get(i).getPayedTax();
