@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     Context context = null;
 
-
     DownloadManager dlmanager;
 
     @Override
@@ -62,7 +61,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -37,8 +37,6 @@ public class SettingsFragment extends Fragment {
         final TextView textView = binding.textSettings;
         settingsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-
-        //Creating night mode functionality
         imageView = root.findViewById(R.id.imageView);
         switchCompat = root.findViewById(R.id.switchCompat);
 

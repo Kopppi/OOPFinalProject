@@ -45,6 +45,7 @@ public class TaxList {
         try {
             while ((line = reader.readLine()) != null){
                 // Split by ';'
+                line = line.replaceAll("�", "ä");
                 line = line.replaceAll(",", ".");
                 line = line.replaceAll("�", "ä");
                 String[] tokens = line.split(";");
