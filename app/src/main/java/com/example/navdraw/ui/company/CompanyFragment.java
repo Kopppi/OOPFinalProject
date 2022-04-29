@@ -40,7 +40,8 @@ public class CompanyFragment extends Fragment {
     Button buttonAddFavourites;
     private List<TaxSample> TaxSamples;
     private List<FavouritesList> Favourites;
-    boolean helper;
+    private boolean helper;
+    private int counter = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -85,12 +86,8 @@ public class CompanyFragment extends Fragment {
         buttonAddFavourites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println(TaxSamples.get(position).getID());
-                System.out.println(Favourites.size());
-                for (int i = 0; i < 5; i++) {
-                    System.out.println(Favourites.get(i).getID());
-                }
-                for (int i = 0; i < Favourites.size(); i++) {
+                counter ++;
+                for (int i = 0; i < counter; i++) {
                     if (TaxSamples.get(position).getID() == Favourites.get(i).getID()){
                         helper = false;
                     } else {
