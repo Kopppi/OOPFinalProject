@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     Context context = null;
 
-    DownloadManager dlmanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

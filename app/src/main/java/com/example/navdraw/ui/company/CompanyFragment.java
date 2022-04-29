@@ -19,11 +19,13 @@ import com.example.navdraw.TaxSample;
 import com.example.navdraw.ui.favourites.FavouritesList;
 import com.example.navdraw.ui.home.HomeFragment;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class CompanyFragment extends Fragment {
 
@@ -86,7 +88,25 @@ public class CompanyFragment extends Fragment {
         buttonAddFavourites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                counter ++;
+                File file = new File("favourites.csv");
+
+
+
+                try {
+                    Scanner scanner = new Scanner(file);
+                    //Reading the favourites.csv file line by line to search for matches
+                    int lineNum = 0;
+                    while (scanner.hasNextLine())   {
+                        String line = scanner.nextLine();
+                        lineNum++;
+                        //TODO Tähän jotakin fiksua, esim käy lista läpi ja tsekkaa löytyykö ID
+                      //  (Favourites.get(i).getID())
+                    }
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                counter++;
                 for (int i = 0; i < counter; i++) {
                     if (TaxSamples.get(position).getID() == Favourites.get(i).getID()){
                         helper = false;
