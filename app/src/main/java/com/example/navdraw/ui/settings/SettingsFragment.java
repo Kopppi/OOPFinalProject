@@ -46,7 +46,7 @@ public class SettingsFragment extends Fragment {
         Boolean booleanValue = sharedPreferences.getBoolean("night_mode", false);
         if (booleanValue)   {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            switchCompat.setChecked(false);
+            switchCompat.setChecked(true);
         }
 
         switchCompat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()  {
