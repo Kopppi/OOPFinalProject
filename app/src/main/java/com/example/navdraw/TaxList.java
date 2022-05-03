@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TaxList {
+    private boolean loaded = false;
     private static TaxList taxList = null;
 
     public static TaxList getInstance() {
@@ -78,5 +79,13 @@ public class TaxList {
 
     public ArrayList<String> getNames() {
         return names;
+    }
+
+    public boolean isLoaded() {
+        return loaded;
+    }
+
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
 }

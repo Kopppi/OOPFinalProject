@@ -44,10 +44,15 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        TaxList taxList = TaxList.getInstance();
-        taxList.setArrays(getApplicationContext());
+        // Check if CSV has been already loaded
+        if(TaxList.getInstance().isLoaded() == false) {
+            TaxList taxList = TaxList.getInstance();
+            taxList.setArrays(getApplicationContext());
+            TaxList.getInstance().setLoaded(true);
+        }
         FavouritesList favouritesList = FavouritesList.getInstance();
         favouritesList.setArrays(getApplicationContext());
+
 
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());

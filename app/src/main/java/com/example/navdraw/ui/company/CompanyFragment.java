@@ -205,7 +205,7 @@ public class CompanyFragment extends Fragment {
             return false;
         return true;
     }
-    // Simple method for system outs
+    // system outs to keep in check what is happening
     private static void duplicatesLog(String s) {
         System.out.println(s);
     }
