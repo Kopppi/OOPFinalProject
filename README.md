@@ -1,4 +1,4 @@
-# OOPFinalProject
+# Verolaskuri
 # Emil Haapalainen, Teemu Harinen, Veeti Engblom
 
 Program that calculates Finnish companies tax data and with the ability to save entries to "favourites" and view them later. 
