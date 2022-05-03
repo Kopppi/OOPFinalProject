@@ -17,15 +17,17 @@ import com.example.navdraw.R;
 import com.example.navdraw.TaxList;
 import com.example.navdraw.TaxSample;
 import com.example.navdraw.ui.favourites.FavouritesList;
+import com.example.navdraw.ui.favourites.FavouritesSample;
 import com.example.navdraw.ui.home.HomeFragment;
 
-import java.io.File;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Scanner;
 
 public class CompanyFragment extends Fragment {
 
@@ -41,9 +43,7 @@ public class CompanyFragment extends Fragment {
     Button buttonBack;
     Button buttonAddFavourites;
     private List<TaxSample> TaxSamples;
-    private List<FavouritesList> Favourites;
-    private boolean helper;
-    private int counter = 0;
+    private List<FavouritesSample> Favourites;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public class CompanyFragment extends Fragment {
         //Get position of company in the list
         position = getPosition();
         setData();
-        //Creating a button and onClickListener to go back to home fragment
+        //Setting up a button that takes you to home fragment when clicked
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -78,7 +78,7 @@ public class CompanyFragment extends Fragment {
                 }
                 FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
                 // Replace whatever is in the fragment_container view with this fragment
-                transaction.replace(((ViewGroup)getView().getParent()).getId(), fragment, null);
+                transaction.replace(((ViewGroup) getView().getParent()).getId(), fragment, null);
                 // Commit the transaction
                 transaction.commit();
             }
@@ -88,62 +88,37 @@ public class CompanyFragment extends Fragment {
         buttonAddFavourites.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File file = new File("favourites.csv");
+                FavouritesSample company = new FavouritesSample();
+                company.setID(TaxSamples.get(position).getID());
+                company.setName(TaxSamples.get(position).getName());
+                company.setLocation(TaxSamples.get(position).getLocation());
+                company.setTaxedIncome(TaxSamples.get(position).getTaxedIncome());
+                company.setPayedTax(TaxSamples.get(position).getPayedTax());
+                Favourites.add(company);
+                Toast toast = Toast.makeText(getContext(), TaxSamples.get(position).getName() + " Added to favourites", Toast.LENGTH_SHORT);
+                toast.setMargin(50, 50);
+                toast.show();
 
-
+                for (int i = 0; i < Favourites.size(); i++) {
+                    CSVData = Favourites.get(i).getID() + ";" + TaxSamples.get(position).getLocation() + ";" + Favourites.get(i).getName()
+                            + ";" + Favourites.get(i).getPayedTax() + ";" + Favourites.get(i).getTaxedIncome() + "\n";
+                }
 
                 try {
-                    Scanner scanner = new Scanner(file);
-                    //Reading the favourites.csv file line by line to search for matches
-                    int lineNum = 0;
-                    while (scanner.hasNextLine())   {
-                        String line = scanner.nextLine();
-                        lineNum++;
-                        //TODO Tähän jotakin fiksua, esim käy lista läpi ja tsekkaa löytyykö ID
-                      //  (Favourites.get(i).getID())
-                    }
+                    OutputStreamWriter osw = new OutputStreamWriter(getActivity().getApplicationContext().openFileOutput("favourites.csv", Context.MODE_APPEND));
+                    osw.append(CSVData);
+                    osw.close();
                 } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
 
-                counter++;
-                for (int i = 0; i < counter; i++) {
-                    if (TaxSamples.get(position).getID() == Favourites.get(i).getID()){
-                        helper = false;
-                    } else {
-                        helper = true;
-                    }
-                }
-                if (helper) {
-                    FavouritesList company = new FavouritesList();
-                    company.setID(TaxSamples.get(position).getID());
-                    company.setName(TaxSamples.get(position).getName());
-                    company.setLocation(TaxSamples.get(position).getLocation());
-                    company.setTaxedIncome(TaxSamples.get(position).getTaxedIncome());
-                    company.setPayedTax(TaxSamples.get(position).getPayedTax());
-                    Favourites.add(company);
-                    Toast toast=Toast. makeText(getContext(), TaxSamples.get(position).getName() + " Added to favourites",Toast. LENGTH_SHORT);
-                    toast. setMargin(50,50);
-                    toast. show();
-
-                    for(int i = 0; i < Favourites.size(); i++){
-                        CSVData += Favourites.get(i).getID() + ";" + TaxSamples.get(position).getLocation() + ";" + Favourites.get(i).getName()
-                                + ";" + Favourites.get(i).getPayedTax() + ";" + Favourites.get(i).getTaxedIncome() + "\n";
-                    }
-                    System.out.println(CSVData);
-
-                    try {
-                        OutputStreamWriter osw = new OutputStreamWriter(getActivity().getApplicationContext().openFileOutput("favourites.csv", Context.MODE_APPEND));
-                        osw.append(CSVData);
-                        osw.close();
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                writeOrganizedFile();
             }
         });
+
+
         return rootView;
     }
 
@@ -166,7 +141,72 @@ public class CompanyFragment extends Fragment {
         textViewTaxed.setText(String.valueOf(TaxSamples.get(position).getPayedTax()) + " €");
     }
 
-    public void addToFavourites(){
 
+    //This method writes organized file
+    public void writeOrganizedFile(){
+        //Empty file so when we write it there will be no duplicates
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(getActivity().getApplicationContext().openFileOutput("organized.csv", Context.MODE_PRIVATE));
+            osw.write("");
+            osw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Set bufferedReader and string for reading lines
+        BufferedReader br = null;
+        String line = "";
+
+        // This class implements the Set interface, backed by a hash table (actually a HashMap instance).
+        // It makes no guarantees as to the iteration order of the set; in particular, it does not guarantee that the order will
+        // remain constant over time. This class permits the null element.
+        HashSet<String> allLines = new HashSet<>();
+
+        //reading all the lines from favourites.csv and checking for duplicates
+        try {
+            br = new BufferedReader(new FileReader(getActivity().getApplicationContext().getFilesDir() + "/favourites.csv"));
+            while ((line = br.readLine()) != null) {
+                //writing all non duplicates to organized file
+                if (allLines.add(line)) {
+                    duplicatesLog("Processed line: " + line);
+                    try {
+                        OutputStreamWriter osw = new OutputStreamWriter(getActivity().getApplicationContext().openFileOutput("organized.csv", Context.MODE_APPEND));
+                        osw.append(line + "\n");
+                        osw.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else if (!isNullOrEmpty(line)) {
+                    duplicatesLog("--------------- Skipped line: " + line);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    // Check if String with spaces is Empty or Null
+    public static boolean isNullOrEmpty(String line) {
+        if (line != null && !line.trim().isEmpty())
+            return false;
+        return true;
+    }
+    // Simple method for system outs
+    private static void duplicatesLog(String s) {
+        System.out.println(s);
     }
 }

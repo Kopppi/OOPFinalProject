@@ -1,6 +1,6 @@
 package com.example.navdraw.ui.favourites;
 
-public class FavouritesList {
+public class FavouritesSample {
         private String ID;
         private String name;
         private String location;

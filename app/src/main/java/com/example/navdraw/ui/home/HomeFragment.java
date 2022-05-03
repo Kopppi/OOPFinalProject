@@ -45,14 +45,11 @@ public class HomeFragment extends Fragment {
     TextView textViewTotalTax;
     TextView textViewAverageTax;
     TextView textViewAd;
-    private String selected;
     EditText editTextFilter;
     ListView listView;
     ArrayAdapter adapter;
     private ArrayList<String> names;
     private List<TaxSample> TaxSamples;
-
-    int id;
     AllTheaters theaters = new AllTheaters();
     AllMovies films = new AllMovies();
 

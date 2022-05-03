@@ -27,6 +27,7 @@
         <entry key="..\:/Users/emhaa/Documents/OlioFP/NavDraw/app/src/main/res/menu/activity_main_drawer.xml" value="0.2163265306122449" />
         <entry key="..\:/Users/emhaa/Documents/OlioFP/NavDraw/app/src/main/res/menu/main.xml" value="0.36666666666666664" />
         <entry key="app/src/main/res/drawable-anydpi/ic_menu_home.xml" value="0.2745" />
+        <entry key="app/src/main/res/drawable-anydpi/textview_border.xml" value="0.313" />
         <entry key="app/src/main/res/drawable/side_nav_bar.xml" value="0.251" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.31567028985507245" />
         <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.23229166666666667" />
@@ -37,6 +38,7 @@
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.23229166666666667" />
         <entry key="app/src/main/res/layout/list_item_layout.xml" value="0.18958333333333333" />
         <entry key="app/src/main/res/layout/nav_header_main.xml" value="0.31567028985507245" />
+        <entry key="app/src/main/res/layout/textview_border.xml" value="0.3541666666666667" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.4244791666666667" />
         <entry key="app/src/main/res/menu/main.xml" value="0.23229166666666667" />
       </map>

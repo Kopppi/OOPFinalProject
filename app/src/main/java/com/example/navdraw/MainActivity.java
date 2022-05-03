@@ -26,6 +26,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.navdraw.databinding.ActivityMainBinding;
+import com.example.navdraw.ui.favourites.FavouritesList;
 import com.example.navdraw.ui.home.HomeFragment;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
@@ -45,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
 
         TaxList taxList = TaxList.getInstance();
         taxList.setArrays(getApplicationContext());
+        FavouritesList favouritesList = FavouritesList.getInstance();
+        favouritesList.setArrays(getApplicationContext());
+
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
