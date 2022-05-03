@@ -54,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
         favouritesList.setArrays(getApplicationContext());
 
 
-
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
@@ -74,7 +73,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

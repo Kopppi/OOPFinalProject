@@ -55,6 +55,7 @@ public class FavouritesFragment extends Fragment {
         Favourites = FavouritesList.getInstance().getFavouritesSample();
         names = FavouritesList.getInstance().getNames();
 
+
         //Adding adapter to ArrayList names
         adapter = new ArrayAdapter<String>(getActivity(),
                 R.layout.list_item_layout, names);
@@ -98,8 +99,6 @@ public class FavouritesFragment extends Fragment {
     public void setTextView(){
         textView.setText("Favourites chosen");
     }
-
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();

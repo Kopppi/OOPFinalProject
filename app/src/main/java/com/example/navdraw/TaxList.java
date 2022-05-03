@@ -32,7 +32,7 @@ public class TaxList {
         TaxSamples = new ArrayList<>();
         names = new ArrayList<>();
 
-        InputStream is = context.getResources().openRawResource(R.raw.verotiedot10);
+        InputStream is = context.getResources().openRawResource(R.raw.verotiedot);
         BufferedReader reader = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 
         // Get rid of tittle line

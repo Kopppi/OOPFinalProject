@@ -39,7 +39,7 @@ public class SettingsFragment extends Fragment {
 
 
         //Creating dark mode functionality
-        imageView = root.findViewById(R.id.imageView);
+       // imageView = root.findViewById(R.id.imageView);
         switchCompat = root.findViewById(R.id.switchCompat);
 
         sharedPreferences = getActivity().getSharedPreferences("night", 0);
