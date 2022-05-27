@@ -1,7 +1,7 @@
 # Verolaskuri
 # Emil Haapalainen, Teemu Harinen, Veeti Engblom
 
-Program that calculates Finnish companies tax data and with the ability to save entries to "favourites" and view them later. 
+Program that calculates Finnish companies tax data with the ability to save entries to "favourites" and view them later. 
 Also fetches movie theater data from Finnkinos API to display as advertisements on the main page.
 
 
